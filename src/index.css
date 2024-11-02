@@ -16,3 +16,26 @@
   background-color: var(--cyan) ;
   color: white;
 }
+
+.staggered{
+  display: grid;
+  grid-template-areas: 
+  "a . ."
+  "a b ."
+  ". b c"
+  ". . c";
+  border: 2px solid red;
+}
+
+.areaA {
+  grid-area: a;
+}
+
+.areaB {
+  grid-area: b;
+}
+
+.areaC {
+  grid-area: c;
+}
+

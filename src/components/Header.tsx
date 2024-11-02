@@ -1,4 +1,4 @@
-import CompanyLogo from "../assets/logo.svg"
+import CompanyLogo from "@/assets/logo.svg";
 import { useState } from 'react';
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white ">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -17,15 +17,15 @@ const Header = () => {
             <img src={CompanyLogo} alt="Logo" className="h-8  mr-2" />
           </div>
           {/* Links and Buttons */}
-          <div className="border-2 hidden md:flex grow items-center justify-between space-x-6">
-            <div className="border-2 hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex grow items-center justify-between space-x-6">
+            <div className="hidden md:flex items-center space-x-6">
               <a href="#features" className="text-gray-800 hover:text-gray-600">Features</a>
               <a href="#pricing" className="text-gray-800 hover:text-gray-600">Pricing</a>
               <a href="#resources" className="text-gray-800 hover:text-gray-600">Resources</a>
             </div>
             <div className="flex items-center space-x-4">
               <a href="#login" className="text-gray-800 hover:text-gray-600">Login</a>
-              <a href="#signup" className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Sign Up</a>
+              <a href="#signup" className="btnPrimary rounded-full block px-4 py-2 text-white">Sign Up</a>
             </div>
           </div>
 
