@@ -3,7 +3,9 @@ import axios from 'axios';
 
 const LinkShortener: React.FC = () => {
   const [link, setLink] = useState('');
-  const [shortenedLinks, setShortenedLinks] = useState<{ short: string; long: string }[]>([]);
+  const [shortenedLinks, setShortenedLinks] = useState(()=> {
+    const savedLinks = localStorage.getItem('savedLinks');
+    return savedLinks ? JSON.parse(savedLinks) : []; });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +19,7 @@ const LinkShortener: React.FC = () => {
 
   // update  local storage whenever shortenedLinks changes
   useEffect(() => {
-    localStorage.setItem('shortenedLinks', JSON.stringify(shortenedLinks));
+    localStorage.setItem('savedLinks', JSON.stringify(shortenedLinks));
   }, [shortenedLinks]); 
    
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +27,14 @@ const LinkShortener: React.FC = () => {
     setError(null); // Clear error on new input
   };
 
+  // copy link to clipboard
+  const handleCopyLink = (parentElement: HTMLElement, link: string) => {
+    navigator.clipboard.writeText(link).then(() => {
+    parentElement.textContent='Copied!';
+    }).catch(() => {
+      alert('Failed to copy link to clipboard');
+    });
+  };
   const handleShortenLink = async () => {
     if (!link) {
       setError('Please add a link');
@@ -93,7 +103,9 @@ const LinkShortener: React.FC = () => {
                     {shortenedLink.short}
                   </a>
                   {/* button that stores short link to clipboard */}
-                  <button className='bg-Cyan text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300'>
+                  <button onClick={(event)=>handleCopyLink(event.target as HTMLElement,shortenedLink.short)} 
+                  className='bg-Cyan text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300'
+                  >
                     copy
                   </button>
                   </div>
