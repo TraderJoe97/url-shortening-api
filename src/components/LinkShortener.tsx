@@ -40,17 +40,17 @@ const LinkShortener: React.FC = () => {
   return (
     <div className="flex flex-col items-center p-6 rounded-2xl
                     absolute top-0 transform -translate-y-1/2 bg-Dark_Violet bg-[url('@/assets/bg-boost-desktop.svg')] bg-auto w-3/4">
-      <div className="w-full flex items-center bg-gray-200 rounded-lg p-2">
+      <div className="w-full flex items-center rounded-lg p-2 gap-2">
         <input
           type="text"
           placeholder="Shorten a link here..."
           value={link}
           onChange={handleInputChange}
-          className="flex-1 p-2 text-gray-800 bg-transparent outline-none"
+          className="flex-1 p-2 text-gray-800 bg-gray-200 rounded outline-none"
         />
         <button
           onClick={handleShortenLink}
-          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-400 transition duration-300"
+          className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300"
           disabled={loading || !link}
         >
           {loading ? 'Shortening...' : 'Shorten It!'}
