@@ -12,7 +12,7 @@ interface StatisticCardProps {
 
 const StatisticCard: React.FC<StatisticCardProps> = ({ title, description, icon, gridArea }) => {
   return (
-    <div className={`relative flex flex-col  bg-white p-5 rounded-lg shadow-lg  w-full ${gridArea}`}>
+    <div className={`relative flex flex-col  bg-white p-5 rounded shadow  w-full ${gridArea}`}>
       <div className="text-teal-500 text-3xl bg-Dark_Violet rounded-full p-4  mb-5 absolute top-0 transform -translate-y-1/2">{icon}</div>
       <h3 className="text-xl font-semibold text-gray-800 pt-5 mb-2">{title}</h3>
       <p className="text-gray-600">{description}</p>
@@ -48,7 +48,7 @@ const Statistics: React.FC = () => {
         <h2 className="text-3xl font-bold text-gray-800">Advanced Statistics</h2>
         <p className="text-gray-600 mt-4">Track how your links are performing across the web with our advanced statistics dashboard.</p>
       </div>
-      <div className="staggered flex flex-col  justify-center gap-20 px-6 blueStrip ">
+      <div className="staggered flex flex-col  justify-center gap-5 px-6 blueStrip ">
         {statsData.map((stat, index) => (
           <StatisticCard
             key={index}
