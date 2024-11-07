@@ -21,7 +21,8 @@
 
 /* Staggered grid layout for positioning elements */
 .staggered {
-  display: grid;
+  @media screen and (min-width: 1024px) {
+    display: grid;
   grid-template-areas:
     "a . ."
     "a b ."
@@ -32,8 +33,8 @@
     "a b c"
     ". b c"
     ". . c";
+  }
 }
-
 /* Grid area styling for staggered layout */
 .areaA {
   grid-area: a;
