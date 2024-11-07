@@ -25,30 +25,30 @@ const Statistics: React.FC = () => {
     {
       title: 'Brand Recognition',
       description: 'Boost your brand recognition with each click. Generic links don’t mean a thing. Branded links help instill confidence in your content.',
-      icon: <img /* Brand recognition icon SVG */ src={Brandrecognition} />,
+      icon: <img /* Brand recognition icon SVG */ src={Brandrecognition} alt=""/>,
       gridArea: 'areaA',
     },
     {
       title: 'Detailed Records',
       description: 'Gain insights into who is clicking your links. Knowing when and where people engage with your content helps inform better decisions.',
-      icon: <img /* Records icon SVG */ src={Detailedrecords} />,
+      icon: <img /* Records icon SVG */ src={Detailedrecords} alt=""/>,
       gridArea: 'areaB',
     },
     {
       title: 'Fully Customizable',
       description: 'Improve brand awareness and content discoverability through customizable links, supercharging audience engagement.',
-      icon: <img /* Customizable icon SVG */ src={Fullycustomizable} />,
+      icon: <img /* Customizable icon SVG */ src={Fullycustomizable} alt="" />,
       gridArea: 'areaC',
     },
   ];
 
   return (
-    <div className=" absolute top-0 transform translate-y-1/2  w-full ">
+    <div className=" w-full ">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-gray-800">Advanced Statistics</h2>
         <p className="text-gray-600 mt-4">Track how your links are performing across the web with our advanced statistics dashboard.</p>
       </div>
-      <div className=" justify-center gap-10 staggered">
+      <div className=" justify-center gap-5 px-6 blueStrip staggered">
         {statsData.map((stat, index) => (
           <StatisticCard
             key={index}

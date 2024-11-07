@@ -39,7 +39,7 @@ const LinkShortener: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center p-6 rounded-2xl
-                    absolute top-0 transform -translate-y-1/2 bg-Dark_Violet bg-[url('@/assets/bg-boost-desktop.svg')] bg-auto w-3/4">
+                    transform -translate-y-1/2 bg-Dark_Violet bg-[url('@/assets/bg-boost-desktop.svg')] bg-auto w-3/4">
       <div className="w-full flex items-center rounded-lg p-2 gap-2">
         <input
           type="text"
@@ -47,6 +47,7 @@ const LinkShortener: React.FC = () => {
           value={link}
           onChange={handleInputChange}
           className="flex-1 p-2 text-gray-800 bg-gray-200 rounded outline-none"
+          id="shorten-link-input"
         />
         <button
           onClick={handleShortenLink}

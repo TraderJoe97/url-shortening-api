@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Define custom CSS variables for colors */
 :root {
   --cyan: hsl(180, 66%, 49%);
   --dark-violet: hsl(257, 27%, 26%);
@@ -12,21 +13,28 @@
   --very-dark-violet: hsl(260, 8%, 14%);
 }
 
+/* Primary button styling */
 .btnPrimary {
-  background-color: var(--cyan) ;
+  background-color: var(--cyan);
   color: white;
 }
 
-.staggered{
+/* Staggered grid layout for positioning elements */
+.staggered {
   display: grid;
-  grid-template-areas: 
-  "a . ."
-  "a b ."
-  ". b c"
-  ". . c";
-  border: ;
+  grid-template-areas:
+    "a . ."
+    "a b ."
+    "a b c"
+    "a b c"
+    "a b c"
+    "a b c"
+    "a b c"
+    ". b c"
+    ". . c";
 }
 
+/* Grid area styling for staggered layout */
 .areaA {
   grid-area: a;
 }
@@ -39,3 +47,34 @@
   grid-area: c;
 }
 
+/* Styling for a blue stripe effect */
+.blueStrip {
+  position: relative;
+  background-color: transparent;
+}
+
+.blueStrip::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1rem; /* Adjust height for the stripe thickness */
+  background-color: var(--cyan);
+  z-index: 0; /* Places the stripe behind the content */
+  transform: translateY(-50%); /* Center the stripe vertically */
+  margin: 1.5rem;
+}
+
+/* Outer container styling for centering content horizontally */
+.outer-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+}
+
+/* Site container for responsive layout */
+.site-container {
+  width: 100%;
+  max-width: 1200px; /* Set a max-width to limit width */
+  padding: 0 1rem; /* Optional padding for spacing */
+}

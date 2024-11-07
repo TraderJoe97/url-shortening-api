@@ -7,7 +7,7 @@ function App() {
  
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white site-container">
         <Header/>
         <Hero
         title="More than just shorter links"
@@ -16,8 +16,10 @@ function App() {
         imageUrl={heroImg}
         onButtonClick={()=>{console.log("Button clicked")}}
          />
-        <div className="flex relative bg-red-500 justify-center ">
-          <LinkShortener/>
+        <div className="flex flex-col bg-Gray justify-center ">
+          <div className="flex bg-transparent justify-center w-full relative">
+            <LinkShortener/>
+          </div>
           <Statistics/>
         </div>
       </div>

@@ -14,12 +14,11 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, buttonText, imageUrl, onBu
       <div className="lg:w-1/2 max-w-xl lg:text-left text-center mb-8 lg:mb-0">
         <h1 className="text-4xl lg:text-5xl font-bold mb-4">{title}</h1>
         <p className="text-lg mb-6">{subtitle}</p>
-        <button
-          onClick={onButtonClick}
-          className="btnPrimary rounded-full block px-4 py-2 text-white"
-        >
+        <a href="#shorten-link-input">
+          <button onClick={onButtonClick} className="btnPrimary rounded-full block px-4 py-2 text-white">
           {buttonText}
-        </button>
+          </button>
+        </a>
       </div>
       <div className="lg:w-1/2 flex justify-center lg:justify-end">
         <img
