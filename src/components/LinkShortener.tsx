@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const LinkShortener: React.FC = () => {
   const [link, setLink] = useState('');
-  const [shortenedLink, setShortenedLink] = useState<string | null>(null);
+  const [shortenedLinks, setShortenedLinks] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // load shortened links from local storage on component mount
+  useEffect(() => {
+    const savedLinks = localStorage.getItem('shortenedLinks')
+    if (savedLinks) {
+      setShortenedLinks(JSON.parse(savedLinks));
+    }
+  }, []); // Empty dependency array to run only once on component mount
+
+  // update  local storage whenever shortenedLinks changes
+  useEffect(() => {
+    localStorage.setItem('shortenedLinks', JSON.stringify(shortenedLinks));
+  }, [shortenedLinks]); 
+   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLink(e.target.value);
     setError(null); // Clear error on new input
@@ -20,11 +33,12 @@ const LinkShortener: React.FC = () => {
 
     setLoading(true);
     setError(null);
-    setShortenedLink(null);
+    
 
     try {
       const response = await axios.post('/.netlify/functions/shortenLink', { url: link });
-      setShortenedLink(response.data.result_url);
+      const newShortenedLink = response.data.result_url;
+      setShortenedLinks([newShortenedLink,...shortenedLinks]);
     } catch (error: any) {
       if (error.response) {
         setError(`Error: ${error.response.data.error}`);
@@ -34,6 +48,7 @@ const LinkShortener: React.FC = () => {
       console.error(error);
     } finally {
       setLoading(false);
+      setLink(''); // Clear input after successful shortening
     }
   };
 
@@ -58,17 +73,23 @@ const LinkShortener: React.FC = () => {
         </button>
       </div>
       {error && <p className="text-red-500 mt-2">{error}</p>}
-      {shortenedLink && (
+      {shortenedLinks.length > 0 && (
         <div className="mt-4 w-full text-center">
-          <p className="text-gray-600">Shortened Link:</p>
-          <a
-            href={shortenedLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-teal-500 underline break-words"
-          >
-            {shortenedLink}
-          </a>
+          <p className="text-gray-600">Saved Links:</p>
+          <ul>
+            {shortenedLinks.map((shortenedLink, index) => (
+              <li key={index} className="mt-2">
+                <a
+                  href={shortenedLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-teal-500 underline break-words"
+                >
+                  {shortenedLink}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

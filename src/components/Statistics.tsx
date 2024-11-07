@@ -48,7 +48,7 @@ const Statistics: React.FC = () => {
         <h2 className="text-3xl font-bold text-gray-800">Advanced Statistics</h2>
         <p className="text-gray-600 mt-4">Track how your links are performing across the web with our advanced statistics dashboard.</p>
       </div>
-      <div className=" justify-center gap-5 px-6 blueStrip staggered">
+      <div className="staggered flex flex-col  justify-center gap-20 px-6 blueStrip ">
         {statsData.map((stat, index) => (
           <StatisticCard
             key={index}
