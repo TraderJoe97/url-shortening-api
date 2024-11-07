@@ -23,10 +23,15 @@ const LinkShortener: React.FC = () => {
     setShortenedLink(null);
 
     try {
-      const response = await axios.post('https://cleanuri.com/api/v1/shorten', { url: link });
+      const response = await axios.post('/api/shorten', { url: link });
       setShortenedLink(response.data.result_url);
-    } catch (error) {
-      setError('Failed to shorten the link. Please try again.');
+    } catch (error: any) {
+      if (error.response) {
+        setError(`Error: ${error.response.data.error}`);
+      } else {
+        setError('Failed to shorten the link. Please try again.');
+      }
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -46,7 +51,7 @@ const LinkShortener: React.FC = () => {
         <button
           onClick={handleShortenLink}
           className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-400 transition duration-300"
-          disabled={loading}
+          disabled={loading || !link}
         >
           {loading ? 'Shortening...' : 'Shorten It!'}
         </button>
