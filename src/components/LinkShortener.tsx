@@ -79,6 +79,7 @@ const LinkShortener: React.FC = () => {
           <ul>
             {shortenedLinks.map((shortenedLink, index) => (
               <li key={index} className="mt-2">
+                <div>{link}</div>
                 <a
                   href={shortenedLink}
                   target="_blank"
