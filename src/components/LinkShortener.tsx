@@ -14,7 +14,6 @@ const LinkShortener: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   // load shortened links from local storage on component mount
-  // prevent duplicate links
   useEffect(() => {
     const savedLinks = localStorage.getItem('savedLinks')
     if (savedLinks) {
@@ -55,7 +54,8 @@ const LinkShortener: React.FC = () => {
     //check if link already exists in shortenedLinks
     const isDuplicate = shortenedLinks.some((shortenedLink: shortenedLinkProps) => shortenedLink.long === link);
     if (isDuplicate) {
-      setError('This link has already been shortened.')
+      setError('This link has already been shortened.');
+      return;
     }
     setLoading(true);
     setError(null);
