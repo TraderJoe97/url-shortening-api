@@ -82,7 +82,7 @@ const LinkShortener: React.FC = () => {
     <div className="flex mx-auto container flex-col w-full items-center">
       <div className="flex flex-col items-center p-6 rounded-2xl
                     transform -translate-y-1/2 customBackground1 w-3/4">
-        <div className="w-full flex items-center rounded-lg p-2 gap-2">
+        <div className="w-full flex flex-col md:flex-row items-center rounded-lg p-2 gap-2">
           <input
             type="text"
             placeholder="Shorten a link here..."
@@ -107,7 +107,7 @@ const LinkShortener: React.FC = () => {
             <p className="text-gray-600">Saved Links:</p>
             <ul className="w-full space-y-4">
                {shortenedLinks.map((shortenedLink: shortenedLinkProps, index: number) => (
-              <li key={index} className="flex w-full justify-between  items-center p-4 bg-white rounded shadow-md">
+              <li key={index} className="flex flex-col md:flex-row w-full justify-between  items-center p-4 bg-white rounded shadow-md">
                 <p className="text-gray-800 break-all text-start flex-1 items-start mr-4">{shortenedLink.long}</p>
                 <a
                   href={shortenedLink.short}
