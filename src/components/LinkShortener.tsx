@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+interface shortenedLinkProps {
+  short: string;
+  long: string;
+}
 const LinkShortener: React.FC = () => {
   const [link, setLink] = useState<string>('');
   const [shortenedLinks, setShortenedLinks] = useState(()=> {
@@ -38,8 +42,8 @@ const LinkShortener: React.FC = () => {
   };
 
   // delete link
-  const handleDeleteLink = (shortenedLink) => {
-    setShortenedLinks(shortenedLinks.filter((link) =>(link !== shortenedLink)))
+  const handleDeleteLink = (shortenedLink: object) => {
+    setShortenedLinks(shortenedLinks.filter((link: object) =>(link !== shortenedLink)))
   }
 
   const handleShortenLink = async () => {
@@ -49,7 +53,7 @@ const LinkShortener: React.FC = () => {
     }
 
     //check if link already exists in shortenedLinks
-    const isDuplicate = shortenedLinks.some((shortenedLink) => shortenedLink.long === link);
+    const isDuplicate = shortenedLinks.some((shortenedLink: shortenedLinkProps) => shortenedLink.long === link);
     if (isDuplicate) {
       setError('This link has already been shortened.')
     }
@@ -102,7 +106,7 @@ const LinkShortener: React.FC = () => {
           <div className="mt-4 w-full p-10 text-center">
             <p className="text-gray-600">Saved Links:</p>
             <ul>
-              {shortenedLinks.map((shortenedLink, index) => (
+              {shortenedLinks.map((shortenedLink: shortenedLinkProps, index: number) => (
                 <li key={index} className="mt-4 w-full flex flex-wrap gap-5">
                   <div>{shortenedLink.long}</div>
                   <div className="flex flex-wrap gap-5">
