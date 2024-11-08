@@ -67,18 +67,7 @@
   margin: 1.5rem;
 }
 
-/* Outer container styling for centering content horizontally */
-.outer-container {
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-}
 
-/* Site container for responsive layout */
-.site-container {
-  width: 100%;
-  max-width: 1200px; /* Set a max-width to limit width */
-  padding: 0 1rem; /* Optional padding for spacing */
-}
 
 .customBackground1 {
   background-color: var(--dark-violet);

@@ -79,7 +79,7 @@ const LinkShortener: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex mx-auto container flex-col w-full items-center">
       <div className="flex flex-col items-center p-6 rounded-2xl
                     transform -translate-y-1/2 customBackground1 w-3/4">
         <div className="w-full flex items-center rounded-lg p-2 gap-2">
@@ -101,38 +101,38 @@ const LinkShortener: React.FC = () => {
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
-      <div>
+      <div className="container mx-auto">
         {shortenedLinks.length > 0 && (
-          <div className="mt-4 w-full p-10 text-center">
+          <div className="mt-1 w-3/4 mx-auto p-10 text-center">
             <p className="text-gray-600">Saved Links:</p>
-            <ul>
-              {shortenedLinks.map((shortenedLink: shortenedLinkProps, index: number) => (
-                <li key={index} className="mt-4 w-full flex flex-wrap gap-5">
-                  <div>{shortenedLink.long}</div>
-                  <div className="flex flex-wrap gap-5">
-                    <a
-                    href={shortenedLink.short}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-teal-500 underline break-words"
-                    >
-                    {shortenedLink.short}
-                  </a>
-                  {/* button that stores short link to clipboard */}
-                  <button onClick={(event)=>handleCopyLink(event.target as HTMLElement,shortenedLink.short)} 
-                  className="bg-Cyan text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300"
-                  >
-                    copy
-                  </button>
-                  {/* button that deletes link from local storage */}
-                  <button className="bg-Red text-white px-4 py-2 rounded hover:bg-red-500 transition duration-300"
-                  onClick={()=>handleDeleteLink(shortenedLink)}
-                  >
-                    delete
-                  </button>
-                  </div>
-                </li>
-              ))}
+            <ul className="w-full space-y-4">
+               {shortenedLinks.map((shortenedLink: shortenedLinkProps, index: number) => (
+              <li key={index} className="flex w-full justify-between  items-center p-4 bg-white rounded shadow-md">
+                <p className="text-gray-800 break-all text-start flex-1 items-start mr-4">{shortenedLink.long}</p>
+                <a
+                  href={shortenedLink.short}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-teal-500 underline break-words flex-none mr-4"
+                >
+                  {shortenedLink.short}
+                </a>
+                {/* Copy Button */}
+                <button
+                  onClick={(event) => handleCopyLink(event.target as HTMLElement, shortenedLink.short)}
+                  className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300 shadow-md"
+                >
+                  Copy
+                </button>
+                {/* Delete Button */}
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300 shadow-md ml-2"
+                  onClick={() => handleDeleteLink(shortenedLink)}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
             </ul>
           </div>
         )}

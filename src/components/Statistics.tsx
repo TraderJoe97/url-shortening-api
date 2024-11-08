@@ -43,7 +43,7 @@ const Statistics: React.FC = () => {
   ];
 
   return (
-    <div className=" w-full ">
+    <div className=" w-full flex flex-col mx-auto container justify-center ">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-gray-800">Advanced Statistics</h2>
         <p className="text-gray-600 mt-4">Track how your links are performing across the web with our advanced statistics dashboard.</p>
