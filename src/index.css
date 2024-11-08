@@ -79,3 +79,29 @@
   max-width: 1200px; /* Set a max-width to limit width */
   padding: 0 1rem; /* Optional padding for spacing */
 }
+
+.customBackground1 {
+  background-color: var(--dark-violet);
+  background-image: url('@/assets/bg-shorten-mobile.svg');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+
+  @media screen and (min-width: 1024px) {
+
+    background-image: url('@/assets/bg-shorten-desktop.svg'); /* Use larger image on larger screens */
+  }
+}
+
+.customBackground2 {
+  background-color: var(--dark-violet);
+  background-image: url('@/assets/bg-boost-mobile.svg');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+
+  @media screen and (min-width: 1024px) {
+
+    background-image: url('@/assets/bg-boost-desktop.svg'); /* Use larger image on larger screens */
+  }
+}

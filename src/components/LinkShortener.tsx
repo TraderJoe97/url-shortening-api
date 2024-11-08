@@ -81,7 +81,7 @@ const LinkShortener: React.FC = () => {
   return (
     <div className="flex flex-col w-full items-center">
       <div className="flex flex-col items-center p-6 rounded-2xl
-                    transform -translate-y-1/2 bg-Dark_Violet bg-[url('@/assets/bg-boost-desktop.svg')] bg-auto w-3/4">
+                    transform -translate-y-1/2 customBackground1 w-3/4">
         <div className="w-full flex items-center rounded-lg p-2 gap-2">
           <input
             type="text"
