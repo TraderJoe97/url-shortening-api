@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const LinkShortener: React.FC = () => {
-  const [link, setLink] = useState('');
+  const [link, setLink] = useState<string>('');
   const [shortenedLinks, setShortenedLinks] = useState(()=> {
     const savedLinks = localStorage.getItem('savedLinks');
     return savedLinks ? JSON.parse(savedLinks) : []; });
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // load shortened links from local storage on component mount
+  // prevent duplicate links
   useEffect(() => {
     const savedLinks = localStorage.getItem('savedLinks')
     if (savedLinks) {
@@ -23,7 +24,7 @@ const LinkShortener: React.FC = () => {
   }, [shortenedLinks]); 
    
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLink(e.target.value);
+    setLink(e.target.value.trim());
     setError(null); // Clear error on new input
   };
 
@@ -35,12 +36,23 @@ const LinkShortener: React.FC = () => {
       alert('Failed to copy link to clipboard');
     });
   };
+
+  // delete link
+  const handleDeleteLink = (shortenedLink) => {
+    setShortenedLinks(shortenedLinks.filter((link) =>(link !== shortenedLink)))
+  }
+
   const handleShortenLink = async () => {
     if (!link) {
-      setError('Please add a link');
+      setError('Please add a link.');
       return;
     }
 
+    //check if link already exists in shortenedLinks
+    const isDuplicate = shortenedLinks.some((shortenedLink) => shortenedLink.long === link);
+    if (isDuplicate) {
+      setError('This link has already been shortened.')
+    }
     setLoading(true);
     setError(null);
     
@@ -104,9 +116,15 @@ const LinkShortener: React.FC = () => {
                   </a>
                   {/* button that stores short link to clipboard */}
                   <button onClick={(event)=>handleCopyLink(event.target as HTMLElement,shortenedLink.short)} 
-                  className='bg-Cyan text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300'
+                  className="bg-Cyan text-white px-4 py-2 rounded hover:bg-teal-400 transition duration-300"
                   >
                     copy
+                  </button>
+                  {/* button that deletes link from local storage */}
+                  <button className="bg-Red text-white px-4 py-2 rounded hover:bg-red-500 transition duration-300"
+                  onClick={()=>handleDeleteLink(shortenedLink)}
+                  >
+                    delete
                   </button>
                   </div>
                 </li>
