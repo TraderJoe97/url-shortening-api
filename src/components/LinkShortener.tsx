@@ -108,7 +108,7 @@ const LinkShortener: React.FC = () => {
             <ul className="w-full space-y-4">
                {shortenedLinks.map((shortenedLink: shortenedLinkProps, index: number) => (
               <li key={index} className="flex flex-col md:flex-row w-full justify-between  items-center p-4 bg-white rounded shadow-md">
-                <p className="text-gray-800 break-all text-start flex-1 items-start mr-4">{shortenedLink.long}</p>
+                <p className="text-gray-800 break-all text-left flex-1 items-start mr-4">{shortenedLink.long}</p>
                 <a
                   href={shortenedLink.short}
                   target="_blank"
