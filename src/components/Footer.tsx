@@ -6,7 +6,7 @@ import iconPinterest from '@/assets/icon-pinterest.svg'
 
 const Footer:React.FC = () => {
   return (
-    <footer className="bg-Very_Dark_Violet text-white py-10">
+    <footer className="bg-Very_Dark_Violet px-5 text-white py-10">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         
         {/* Brand Name */}
