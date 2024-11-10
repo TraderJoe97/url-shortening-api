@@ -1,18 +1,27 @@
 const axios = require('axios');
 
 exports.handler = async function (event, context) {
+  console.log('Function invoked with event:', JSON.stringify(event));
+  
   try {
     const { url } = JSON.parse(event.body);
 
     if (!url) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Invalid request. URL is required.' }),
-      };
+      console.error('Invalid request: URL is missing');
+      throw new Error('Invalid request. URL is required.');
     }
 
-    const response = await axios.post('https://cleanuri.com/api/v1/shorten', { url });
+    console.log('Sending request to CleanURI API...');
+    const response = await axios.post('https://cleanuri.com/api/v1/shorten', { url }, {
+      timeout: 8000 // Set a timeout of 8 seconds
+    });
 
+    if (!response.data || !response.data.result_url) {
+      console.error('CleanURI API response:', response.data);
+      throw new Error('CleanURI API did not return a result_url.');
+    }
+
+    console.log('Successful response from CleanURI:', response.data);
     return {
       statusCode: 200,
       headers: {
@@ -23,7 +32,6 @@ exports.handler = async function (event, context) {
   } catch (error) {
     let errorMessage = 'Failed to shorten the link';
 
-    // Check if error is a network or server issue
     if (error.response) {
       errorMessage = error.response.data || 'CleanURI API error';
       console.error('Error response from CleanURI:', error.response.data);
@@ -34,7 +42,6 @@ exports.handler = async function (event, context) {
       console.error('Error setting up request:', error.message);
     }
 
-    // Log the entire error for debugging purposes
     console.error('Detailed error:', error);
 
     return {

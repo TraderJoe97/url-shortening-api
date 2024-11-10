@@ -27,7 +27,7 @@ const LinkShortener: React.FC = () => {
   }, [shortenedLinks]); 
    
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLink(e.target.value.trim());
+    setLink(e.target.value);
     setError(null); // Clear error on new input
   };
 
@@ -45,13 +45,20 @@ const LinkShortener: React.FC = () => {
     setShortenedLinks(shortenedLinks.filter((link: object) =>(link !== shortenedLink)))
   }
 
+  /**
+   * Handle the shortening of a link
+   *
+   * Shortens a link using the API endpoint, adds it to the list of shortened links
+   * and clears the input field.
+   *
+   * @returns {Promise<void>}
+   */
   const handleShortenLink = async () => {
     if (!link) {
       setError('Please add a link.');
       return;
     }
-
-    //check if link already exists in shortenedLinks
+  
     const isDuplicate = shortenedLinks.some((shortenedLink: shortenedLinkProps) => shortenedLink.long === link);
     if (isDuplicate) {
       setError('This link has already been shortened.');
@@ -59,22 +66,23 @@ const LinkShortener: React.FC = () => {
     }
     setLoading(true);
     setError(null);
-    
-
+  
     try {
-      const response = await axios.post('/.netlify/functions/shortenLink', { url: link });
-      const newShortenedLink = {short:response.data.result_url, long:link};
-      setShortenedLinks([newShortenedLink,...shortenedLinks]);
+      const response = await axios.post('/api/shorten', { url: link }, { timeout: 10000 });
+      const newShortenedLink = { short: response.data.result_url, long: link };
+      setShortenedLinks([newShortenedLink, ...shortenedLinks]);
     } catch (error: any) {
       if (error.response) {
         setError(`Error: ${error.response.data.error}`);
+      } else if (error.code === 'ECONNABORTED') {
+        setError('Request timed out. Please try again.');
       } else {
         setError('Failed to shorten the link. Please try again.');
       }
-      console.error(error);
+      console.error('Error details:', error);
     } finally {
       setLoading(false);
-      setLink(''); // Clear input after successful shortening
+      setLink(''); // Clear input after attempt (successful or not)
     }
   };
 
