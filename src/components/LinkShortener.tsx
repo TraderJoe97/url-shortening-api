@@ -68,7 +68,7 @@ const LinkShortener: React.FC = () => {
     setError(null);
   
     try {
-      const response = await axios.post('/api/shorten', { url: link }, { timeout: 10000 });
+      const response = await axios.post('./netlify/functions/shortenLink', { url: link }, { timeout: 10000 });
       const newShortenedLink = { short: response.data.result_url, long: link };
       setShortenedLinks([newShortenedLink, ...shortenedLinks]);
     } catch (error: any) {
