@@ -62,7 +62,7 @@ const LinkShortener: React.FC = () => {
       return;
     }
 
-    const isDuplicate = shortenedLinks.some((shortenedLink) => shortenedLink.long === link);
+    const isDuplicate = shortenedLinks.some((shortenedLink: shortenedLinkProps) => shortenedLink.long === link);
     if (isDuplicate) {
       setError('This link has already been shortened.');
       return;
@@ -84,6 +84,7 @@ const LinkShortener: React.FC = () => {
         setShortenedLinks([newShortenedLink, ...shortenedLinks]);
       } catch (jsonError) {
         // If it's not JSON, it's probably HTML
+        console.error('Error parsing response as JSON:', jsonError);
         setErrorHtml(response.data);
       }
     } catch (error: any) {
