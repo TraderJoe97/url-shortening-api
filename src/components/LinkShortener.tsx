@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
+
 
 interface shortenedLinkProps {
   short: string;
@@ -11,6 +13,7 @@ const LinkShortener: React.FC = () => {
     const savedLinks = localStorage.getItem('savedLinks');
     return savedLinks ? JSON.parse(savedLinks) : []; });
   const [error, setError] = useState<string | null>(null);
+  const [errorHtml, setErrorHtml] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   // load shortened links from local storage on component mount
@@ -58,22 +61,38 @@ const LinkShortener: React.FC = () => {
       setError('Please add a link.');
       return;
     }
-  
-    const isDuplicate = shortenedLinks.some((shortenedLink: shortenedLinkProps) => shortenedLink.long === link);
+
+    const isDuplicate = shortenedLinks.some((shortenedLink) => shortenedLink.long === link);
     if (isDuplicate) {
       setError('This link has already been shortened.');
       return;
     }
     setLoading(true);
     setError(null);
-  
+    setErrorHtml(null);
+
     try {
-      const response = await axios.post('./netlify/functions/shortenLink', { url: link }, { timeout: 10000 });
-      const newShortenedLink = { short: response.data.result_url, long: link };
-      setShortenedLinks([newShortenedLink, ...shortenedLinks]);
+      const response = await axios.post('.netlify/functions/shortenLink', { url: link }, {
+        timeout: 10000,
+        responseType: 'text'  // This allows us to receive the response as text
+      });
+      
+      // Check if the response is JSON (expected behavior)
+      try {
+        const jsonResponse = JSON.parse(response.data);
+        const newShortenedLink = { short: jsonResponse.result_url, long: link };
+        setShortenedLinks([newShortenedLink, ...shortenedLinks]);
+      } catch (jsonError) {
+        // If it's not JSON, it's probably HTML
+        setErrorHtml(response.data);
+      }
     } catch (error: any) {
       if (error.response) {
-        setError(`Error: ${error.response.data.error}`);
+        if (error.response.headers['content-type'].includes('text/html')) {
+          setErrorHtml(error.response.data);
+        } else {
+          setError(`Error: ${error.response.data.error || 'Unknown error occurred'}`);
+        }
       } else if (error.code === 'ECONNABORTED') {
         setError('Request timed out. Please try again.');
       } else {
@@ -82,9 +101,18 @@ const LinkShortener: React.FC = () => {
       console.error('Error details:', error);
     } finally {
       setLoading(false);
-      setLink(''); // Clear input after attempt (successful or not)
+      setLink('');
     }
   };
+
+  if (errorHtml) {
+    return (
+      <div 
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(errorHtml) }} 
+        className="error-container"
+      />
+    );
+  }
 
   return (
     <div className="flex mx-auto container flex-col w-full items-center">
